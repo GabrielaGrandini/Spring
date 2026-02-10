@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuários</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+    <div class = tudo>
+        <h1>Cadastro de Usuário</h1>
+        <form id="form">
+
+       
+            <label>Nome<input type="text" id="nome"  required></label>
+            <label>Email<input type= "text" id="email" required></label>
+            <label>Senha<input type= "text" id="senha"required></label>
+            <label>Perfil<select id="perfil" required>
+                <option disabled selected>Selecione seu perfil...</option>
+                <option value = "USER">USER</option>
+                <option value = "ADMIN">ADMIN</option>
+            </select></label>
+            <label>Endereço<input type="text" id="endereco" required></label>
+            <label>Bairro<input type="text" id="bairro" required></label>
+            <label>Complemento<input type="text" id="complemento"></label>
+            <label>CEP<input type="text" id="cep" required></label>
+            <label>Cidade<input type="text" id="cidade" required></label>
+            <label>Estado<input type="text" id="estado" required></label>
+
+            <button class="botao" type="submit">Salvar Usuário</button>
+            <script src="js/script.js"></script>
+            
+            
+
+            </div>
+        </form>
+    </div><div id="erro">
+</body>
+</html>

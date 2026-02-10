@@ -1,0 +1,72 @@
+
+body {
+    background-color: rgb(101, 51, 240);
+}
+
+.tudo {
+    display: grid;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    width: 500px;
+    margin-right: 600px;
+    margin-left: 700px;
+    margin-top: 70px;
+    height: 900px;
+    
+    
+}
+
+h1 {
+    
+    text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    padding-top: 10px;
+    font-weight: 520;
+}
+
+label {
+display: block;
+padding-top: 10px;
+padding-bottom: 10px;
+font-family:Verdana, Geneva, Tahoma, sans-serif;
+font-weight: 520;
+padding-left: 20px;
+font-size: 17px;
+}
+
+input, select {
+    display: block;
+    border-radius: 5px;
+    border: 2px solid rgb(208, 208, 208);
+    padding: 5px;
+    width: 450px;
+}
+
+
+button{
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(101, 51, 240);
+    color: white;
+    border: none;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 17px;
+    display: block; 
+    margin: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.botao {
+    margin-top: 40px;
+    width: 400px;
+    margin-bottom: 20px;
+}
+
+button:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s ease-in-out;
+    background-color: rgb(86, 43, 205);
+    cursor: pointer;
+}
