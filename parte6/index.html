@@ -8,33 +8,110 @@
     
 </head>
 <body>
-    <div class = tudo>
+<div class="container">
+    
+
+    <form id="usuarioForm">
         <h1>Cadastro de Usuário</h1>
-        <form id="form">
 
-       
-            <label>Nome<input type="text" id="nome"  required></label>
-            <label>Email<input type= "text" id="email" required></label>
-            <label>Senha<input type= "text" id="senha"required></label>
-            <label>Perfil<select id="perfil" required>
-                <option disabled selected>Selecione seu perfil...</option>
-                <option value = "USER">USER</option>
-                <option value = "ADMIN">ADMIN</option>
-            </select></label>
-            <label>Endereço<input type="text" id="endereco" required></label>
-            <label>Bairro<input type="text" id="bairro" required></label>
-            <label>Complemento<input type="text" id="complemento"></label>
-            <label>CEP<input type="text" id="cep" required></label>
-            <label>Cidade<input type="text" id="cidade" required></label>
-            <label>Estado<input type="text" id="estado" required></label>
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" id="nome" required />
+        </div>
 
-            <button class="botao" type="submit">Salvar Usuário</button>
-            <script src="js/script.js"></script>
-            
-            
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required />
+        </div>
 
-            </div>
-        </form>
-    </div><div id="erro">
+        <div class="form-group">
+            <label>Senha</label>
+            <input type="password" id="senha" required />
+        </div>
+
+        <div class="form-group">
+            <label>Perfil</label>
+            <select id="perfil">
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Endereço</label>
+            <input type="text" id="endereco" />
+        </div>
+
+        <div class="form-group">
+            <label>Bairro</label>
+            <input type="text" id="bairro" />
+        </div>
+
+        <div class="form-group">
+            <label>Complemento</label>
+            <input type="text" id="complemento" />
+        </div>
+
+        <div class="form-group">
+            <label>CEP</label>
+            <input type="text" id="cep" />
+        </div>
+
+        <div class="form-group">
+            <label>Cidade</label>
+            <input type="text" id="cidade" />
+        </div>
+
+        <div class="form-group">
+            <label>Estado</label>
+            <input type="text" id="estado" />
+        </div>
+
+        <a href= "usuarios.html">
+       <button type="submit" class="botao" id="botao">Cadastrar Usuário</button> </a>
+    </form>
+
+    <div id="mensagem" class="mensagem"></div>
+</div>
+
+<script>
+const form = document.getElementById('usuarioForm');
+const mensagem = document.getElementById('mensagem');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const usuario = {
+        nome: document.getElementById('nome').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        senha: document.getElementById('senha').value,
+        perfil: document.getElementById('perfil').value,
+        endereco: document.getElementById('endereco').value.trim(),
+        bairro: document.getElementById('bairro').value.trim(),
+        complemento: document.getElementById('complemento').value.trim(),
+        cep: document.getElementById('cep').value.trim(),
+        cidade: document.getElementById('cidade').value.trim(),
+        estado: document.getElementById('estado').value.trim()
+    };
+
+    fetch('http://localhost:8080/usuarios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(usuario)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        mensagem.innerHTML = '<span class="sucesso">Usuário cadastrado com sucesso!</span>';
+        document.getElementById("botao").onclick = function () {
+        window.location.href = "http://127.0.0.1:5500/usuarios.html";
+};
+
+        form.reset();
+    })
+    .catch(() => {
+        mensagem.innerHTML = '<span class="erro">Erro ao cadastrar usuário.</span>';
+    });
+});
+</script>
 </body>
 </html>
