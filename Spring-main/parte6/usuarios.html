@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários</title>
+    <script src="js/script.js"></script>
+    <link rel="stylesheet" href="css/usuarios.css">
+</head>
+<body>
+    <div class= "base">
+        <div class="cima">
+            <h2>Usuários</h2>
+            <a href="index.html"><button class="lindo">Novo usuário</button></a>
+        </div>
+
+        <div id="mensagem"></div>
+        <table class = "tabela" id = "tabela">
+            <thead>
+                <tr>
+                 <th>Nome</th>
+                 <th>Email</th>
+                 <th>Perfil</th>
+                 <th>Cidade</th>
+                 <th>Ações</th>
+               </tr>
+          </thead>
+          <tbody id="tabelaUsuarios"> 
+          </tbody>
+        </table>
+
+        </div>
+    </div>
+
+    <script> 
+        const API = 'http://localhost:8080/usuarios';
+        const tabela = document.getElementById('tabelaUsuarios');
+        const mensagem = document.getElementById('mensagem');
+
+        function carregarUsuarios() {
+            fetch(API /*, {
+            headers: { 'Authorization': 'Bearer + token }
+        }*/)
+            .then (res => {
+                if (!res.ok) throw new Error();
+                return res.json();
+            })
+            .then(usuarios => {
+                tabela.innerHTML = '';
+
+                if (usuarios.length === 0){
+                    tabela.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align:center">Nenhum usuário cadastrado</td>
+                    </tr>`;
+                    return;
+                }
+
+                usuarios.forEach(u => {
+                    tabela.innerHTML += `
+                    <tr> 
+                        <td>${u.nome}</td>
+                        <td>${u.email}</td>
+                        <td>${u.perfil}</td>
+                        <td>${u.cidade || ''}</td>
+                        <td>
+                            <button class = "editar" onclick="editar(${u.id})">Editar</button>
+                            <button class = "deletar" onclick="deletar(${u.id})">Excluir</button>
+                        </td> 
+                    </tr>
+                    `;
+                });
+            })
+            .catch(() => {
+                mensagem.innerHTML = '<span class = "erro">Erro ao carregar usuários.</sapn>';
+            })
+        }
+
+        function novoUsuario (){
+            window.location.href = 'usuarios.html';
+        }
+
+        function editar(id) {
+            window.location.href = `usuarios.html?id=${id}`;
+        }
+
+        function deletar(id) {
+            if (!confirm('Deseja realmente excluir este usuário?')) return;
+
+            fetch(`${API}/${id}`, {
+                method: 'DELETE'/*,
+                headers:{ 'Authorization: 'Bearer' + token} */
+            })
+            .then (res => {
+                if(!res.ok) throw new Error ();
+                carregarUsuarios();
+            })
+            .catch(() => {
+                mensagem.innerHTML = '<span class="erro">Erro ao excluir usuário.</span>';
+            });
+        }
+
+        carregarUsuarios();
+    </script>
+</body>
+</html>
