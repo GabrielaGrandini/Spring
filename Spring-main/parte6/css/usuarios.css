@@ -6,6 +6,56 @@
     padding: 0px
 }
 
+header{
+    background: linear-gradient(rgb(121, 198, 246), rgba(128, 0, 128, 0));
+    padding-bottom: 50px;
+}
+
+.alinha {
+    display: flex;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    margin-left: 1620px;
+    margin-top: -60px;
+}
+
+h4 {
+    background-color: black;
+    padding: 5px 5px 5px 5px;
+    border-radius: 4px;
+    font-style: italic;
+}
+
+
+header button {
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    padding: 5px;
+    border: solid 0px;
+    font-weight: 100;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 6px 6px 6px 6px;
+    margin-left: 10px;
+    margin-top: -5px;
+}
+
+header button:hover{
+    cursor: pointer;
+    background-color: rgb(154, 0, 0);
+}
+
+h1 {
+    color: white;
+    font-family: "Monsieur La Doulaise", cursive;
+    font-weight: 100;
+    font-size: 70px;
+    margin-left: 5px;
+}
+
 body{
     background-image: url('Underwater-Light-animated.webp');
     background-repeat: no-repeat;

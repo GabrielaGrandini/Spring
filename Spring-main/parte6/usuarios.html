@@ -1,12 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuários</title>
-    <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/usuarios.css">
 </head>
+<header>
+    <h1>Sistemas de Usuários</h1>
+    <div class="alinha">
+        <div class="headerRight" id="user"></div>
+        <button id='logout-button'>Sair</button>
+    </div>
+    
+</header>
+<script>
+    document.getElementById('logout-button').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+});
+
+ function mostrarUsuarioLogado() {
+            const userInfo = document.getElementById('user');
+            const usuarioLogado = localStorage.getItem('usuarioLogado');
+            
+            if (usuarioLogado) {
+                const usuario = JSON.parse(usuarioLogado);
+                userInfo.innerHTML = `
+                    <h4 class="user-name"> ${usuario.nome}</h4>`;
+            } else {
+                // Se não estiver logado, redireciona para o login
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Função de logout
+        function logout() {
+            localStorage.removeItem('usuarioLogado');
+            window.location.href = 'login.html';
+        }
+
+        // Chama a função quando a página carregar
+        mostrarUsuarioLogado();
+
+</script>
 <body>
     <div class= "base">
         <div class="cima">
@@ -64,7 +102,7 @@
                         <td>${u.perfil}</td>
                         <td>${u.cidade || ''}</td>
                         <td>
-                            <button class = "editar" onclick="editar(${u.id})">Editar</button>
+                            <button class = "editar" onclick="atualizarUsuario(${u.id})">Editar</button>
                             <button class = "deletar" onclick="deletar(${u.id})">Excluir</button>
                         </td> 
                     </tr>
@@ -72,7 +110,7 @@
                 });
             })
             .catch(() => {
-                mensagem.innerHTML = '<span class = "erro">Erro ao carregar usuários.</sapn>';
+                mensagem.innerHTML = '<span class = "erro">Erro ao carregar usuários.</span>';
             })
         }
 
@@ -80,9 +118,9 @@
             window.location.href = 'usuarios.html';
         }
 
-        function editar(id) {
-            window.location.href = `usuarios.html?id=${id}`;
-        }
+        function atualizarUsuario(id) {
+         window.location.href = `index.html?id=${id}`;
+    }
 
         function deletar(id) {
             if (!confirm('Deseja realmente excluir este usuário?')) return;

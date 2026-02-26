@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +13,11 @@
 
     <form id="usuarioForm">
         <h1>Cadastro de Usuário</h1>
+        <input type="hidden" id="id">
 
         <div class="form-group">
             <label>Nome</label>
+            
             <input type="text" id="nome" required />
         </div>
 
@@ -75,8 +77,42 @@
 </div>
 
 <script>
-const form = document.getElementById('usuarioForm');
-const mensagem = document.getElementById('mensagem');
+    const params = new URLSearchParams(window.location.search);
+    const idUsuario = params.get('id');
+
+    const form = document.getElementById('usuarioForm');
+    const mensagem = document.getElementById('mensagem');
+
+    if (idUsuario) {
+    //grupoSenha.style.display = 'none';
+        carregarUsuario(idUsuario);
+    } else {
+        senha.required = true;
+    }
+
+    function carregarUsuario(id) {
+        fetch(`http://localhost:8080/usuarios/${id}`)
+            .then(res => {
+                if (!res.ok) throw new Error();
+                return res.json();
+            })
+            .then(u => {
+                document.getElementById('id').value = u.id;
+                document.getElementById('nome').value = u.nome;
+                document.getElementById('email').value = u.email;
+                perfil.value = u.perfil;
+                endereco.value = u.endereco || '';
+                bairro.value = u.bairro || '';
+                complemento.value = u.complemento || '';
+                cep.value = u.cep || '';
+                cidade.value = u.cidade || '';
+                estado.value = u.estado || '';
+            })
+            .catch(() => {
+                mensagem.innerHTML =
+                    '<span class="erro">Erro ao carregar usuário para edição.</span>';
+            });
+    }
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -101,12 +137,11 @@ form.addEventListener('submit', function(e) {
     })
     .then(res => {
         if (!res.ok) throw new Error();
-        mensagem.innerHTML = '<span class="sucesso">Usuário cadastrado com sucesso!</span>';
+        alert("Usuário cadastrado com sucesso!");
         document.getElementById("botao").onclick = function () {
         window.location.href = "http://127.0.0.1:5500/usuarios.html";
 };
 
-        form.reset();
     })
     .catch(() => {
         mensagem.innerHTML = '<span class="erro">Erro ao cadastrar usuário.</span>';

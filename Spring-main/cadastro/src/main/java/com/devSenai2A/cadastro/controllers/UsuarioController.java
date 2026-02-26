@@ -27,9 +27,8 @@ private UsuarioService service;
 
 @PostMapping
 public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody Usuario usuario) {
-return ResponseEntity 
-		.status(HttpStatus.CREATED)
-		.body(service.cadastrar(usuario));
+    Usuario novoUsuario = service.cadastrar(usuario);
+    return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
 }
 
 
@@ -60,6 +59,12 @@ return ResponseEntity.notFound().build();
 return ResponseEntity.ok(usuarioAtualizado);
 }
 
+@GetMapping("/{id}")
+public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
+    Usuario usuario = service.buscarPorId(id);
+    if (usuario == null) return ResponseEntity.notFound().build();
+    return ResponseEntity.ok(usuario);
+}
 
 //Listar todos usuários (GET /usuarios)
 @GetMapping
@@ -68,17 +73,17 @@ return service.listarTodos();
 }
 
 @PostMapping("/login")
-public ResponseEntity<?> buscarUsuario(@RequestBody Map<String, String> dados){
-	
-	String email = dados.get("email");
-	String senha = dados.get("senha");
-	
-	Usuario usuario = service.login(email, senha);
-	
-	if (usuario == null) {
-		return ResponseEntity.status(401).body("Login ou senha inválido");
-	}
-	
-	return ResponseEntity.ok(usuario);	
-  }
+public ResponseEntity<?> login(@RequestBody Map<String,
+String> dados) {
+
+        String email = dados.get("email");
+        String senha = dados.get("senha");
+        Usuario usuario = service.login(email, senha);
+
+        if (usuario == null) {
+            return ResponseEntity.status(401).body("Email ou senha inválidos");
+        }
+
+        return ResponseEntity.ok(usuario);
+}
 }
