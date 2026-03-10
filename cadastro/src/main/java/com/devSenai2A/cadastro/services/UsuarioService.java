@@ -3,31 +3,39 @@ package com.devSenai2A.cadastro.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.devSenai2A.cadastro.entities.Usuario;
 import com.devSenai2A.cadastro.repositories.UsuarioRepository;
 
 @Service
+
 public class UsuarioService {
    
     @Autowired
     private UsuarioRepository repository;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; 
    
     public List<Usuario> listarTodos(){
         return repository.findAll();
     }
    
     public Usuario cadastrar(Usuario usuario) {
+     // senha criptografada
+        usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
         return repository.save(usuario);
     }
     
+    
     public Usuario atualizar(Long id, Usuario dados) {
-    	Usuario usuario = repository.findById(id).orElse(null);
+        Usuario usuario = repository.findById(id).orElse(null);
+        if (usuario == null) {
+            return null;
+        }
 
-    	if (usuario == null) {
-    	return null;
-    	}
 
     	usuario.setNome(dados.getNome());
     	usuario.setEmail(dados.getEmail());
@@ -52,4 +60,22 @@ public class UsuarioService {
     	repository.deleteById(id);
     	return true;
     	}
+    	
+    	  public Usuario buscarPorId(Long id) {
+    	        return repository.findById(id).orElse(null);
+    	    }
+    	
+    	public Usuario login(String email, String senha) {
+    		   		
+    		Usuario usuario =  repository.findByEmail(email);
+    		if (usuario == null) {
+    			return null;
+    		}
+            // Validar senha com bcrypt
+            if (!passwordEncoder.matches(senha, usuario.getSenha())) {
+                return null;
+            }
+            return usuario;
+    	}
+    	    	
 }
