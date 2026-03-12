@@ -20,6 +20,7 @@ http
 	.authorizeHttpRequests(auth -> auth
 	.requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll()
 	.requestMatchers("/usuarios/**", "/login/**").permitAll()
+	.requestMatchers("/usarios/solicitar-recuperacao", "/usuarios/redefinir-senha").permitAll()
 	.anyRequest().authenticated()
 );
 

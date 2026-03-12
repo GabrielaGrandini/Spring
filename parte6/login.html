@@ -20,19 +20,34 @@
                     <label>Senha:</label>
                     <input type="password" id="senha" name="senha" placeholder="Digite sua senha...">
                 </div>
+
                 <br><br>
                 <div class="btn">
                     <button type="submit">Entrar</button>
                 </div>
-                <div class="cadastre">
-                    <a href = "http://127.0.0.1:5500/index.html">Ainda não possui cadastro? Crie um aqui!</a>
+                <div class="esqueci">
+                    <a href="#" class="forgot-link" onclick="abrirModal()">Esqueci minha senha</a>
                 </div>
-                <div id="resultado"></div>
-                <div id="erro"></div>
+                <div class="cadastre">
+                <a href = "http://127.0.0.1:5500/index.html">Ainda não possui cadastro? Crie um aqui!</a>
+                </div>
+                <div id="errorMsg" class="error"></div>
             </div>
         </form>
+        
 
-        <div id="mensagem"></div>
+        <div id="modalRecuperacao">
+            <div class="modal-content">
+                <h3>Recuperar Senha</h3>
+                <p style="font-size: 15px; margin: 10px 0; margin-left: 20px; color:#c9c7c7; font-style: italic;">Enviaremos um link para o seu e-mail.</p>
+                <div class="input-group">
+                    <input type="email" id="emailRecuperar" placeholder="Seu e-mail cadastrado">
+                </div>
+                <button onclick="enviarEmailRecuperacao()" class="carambolas">Enviar Link</button>
+                <button onclick="fecharModal()" class="carambolas" style="background: #ccc; color: #333; margin-top: 5px;">Cancelar</button>
+                <div id="statusRecuperacao" style="margin-top: 10px; font-size: 13px;"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -72,8 +87,43 @@
             });
                 });
 
+                function abrirModal() {
+                    document.getElementById("modalRecuperacao").style.display="flex";
+                }
+
+                function fecharModal() {
+                    document.getElementById("modalRecuperacao").style.display="none";
+                    document.getElementById("statusRecuperacao").textContent="";
+                }
+
+                function enviarEmailRecuperacao(){
+                    const email = document.getElementById("emailRecuperar").value;
+                    const status = document.getElementById("satusRecuperacao");
+                }
+
+                if (!email){
+                    status.style.color="blue";
+                    status.textContent="Processando...";
+
+                    fetch(`http://localhost:8080/usuarios/solicitar-recuperacao?email=${email}`,{
+                        method: "POST"
+                    })
+
+                    .then(response => {
+                        if(response.ok) {
+                            status.style.color="green";
+                            status.textContent="E-mail enviado! Verifique sia caixa.";
+                        } else {
+                            status.style.color="red";
+                            status.textContent = "E-mail não encontrado.";
+                        }
+                    })
+
+                    .catch(() => {
+                        status.style.color="red";
+                        status.textContent="Erro ao conectar com o servidor.";
+                    });
+                }
     </script>
-
-
 </body>
 </html>

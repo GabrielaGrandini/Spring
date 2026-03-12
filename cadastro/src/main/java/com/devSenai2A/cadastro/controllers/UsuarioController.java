@@ -86,4 +86,31 @@ String> dados) {
 
         return ResponseEntity.ok(usuario);
 }
+
+@PostMapping("/solicitar-recuperacao")
+public ResponseEntity<Void>solicitarRecuperacao(@RequestBody String email)
+{
+	boolean enviado = service.enviarEmailRecuperacao(email);
+	
+	if(enviado) {
+		return ResponseEntity.ok().build();
+	}else{
+		return ResponseEntity.notFound().build();
+		}
+	}
+
+@PostMapping("/redefinir-senha")
+public ResponseEntity<String> redefinirSenha(@RequestBody Map<String, String> payload) {
+	String email = payload.get("email");
+	String novaSenha = payload.get("novaSenha");
+	
+	boolean sucesso = service.redefinirSenha(email, novaSenha);
+	
+	if(sucesso) {
+		return ResponseEntity.ok("Senha redefinida com sucesso!");
+	} else {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
+	}
+ }
 }
+
