@@ -41,7 +41,7 @@
             e.preventDefault();
 
             const novaSenha = document.getElementById('novaSenha').value;
-            const confirmarSenha = document.getElementById('cofirmarSenha').value;
+            const confirmarSenha = document.getElementById('confirmarSenha').value;
 
             if(novaSenha !== confirmarSenha){
                 mensagem.innerHTML = '<span style="color:red;">As senhas não coincidem!</span>';
@@ -67,7 +67,7 @@
                     throw new Error ();
                 }
             } catch(err) {
-                mensagem.innerHTML= '<span style="color:red;">Erro ao atualizar senha.</span>';
+                mensagem.innerHTML= '<span style="color:black;">Erro ao atualizar senha.</span>';
             }
         });
     </script>

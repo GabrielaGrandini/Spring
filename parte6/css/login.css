@@ -105,3 +105,20 @@ a {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+#modalRecuperacao{
+    display: none;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background: rgba(4, 36, 54, 0.6);
+    justify-content: center; align-items: center;
+}
+
+.modal-content {
+ background: rgb(0, 0, 0); 
+  border-radius: 5px;
+  text-align: center;
+ }
+
+ .modal-content {
+    width: 500px;
+ }

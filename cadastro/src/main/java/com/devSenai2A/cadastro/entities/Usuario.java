@@ -1,5 +1,6 @@
 package com.devSenai2A.cadastro.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -97,5 +98,15 @@ public void setEstado(String estado) {
 	this.estado = estado;
 }
 
+@Column(columnDefinition = "LONGTEXT")
+private String foto;
+
+// Getters e Setters
+public String getFoto() {
+return foto;
+}
+public void setFoto(String foto) {
+this.foto = foto;
+}
 
 }

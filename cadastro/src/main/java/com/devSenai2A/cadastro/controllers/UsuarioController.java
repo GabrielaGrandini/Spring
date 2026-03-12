@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devSenai2A.cadastro.entities.Usuario;
@@ -88,7 +89,7 @@ String> dados) {
 }
 
 @PostMapping("/solicitar-recuperacao")
-public ResponseEntity<Void>solicitarRecuperacao(@RequestBody String email)
+public ResponseEntity<Void>solicitarRecuperacao(@RequestParam String email)
 {
 	boolean enviado = service.enviarEmailRecuperacao(email);
 	
@@ -98,6 +99,8 @@ public ResponseEntity<Void>solicitarRecuperacao(@RequestBody String email)
 		return ResponseEntity.notFound().build();
 		}
 	}
+
+
 
 @PostMapping("/redefinir-senha")
 public ResponseEntity<String> redefinirSenha(@RequestBody Map<String, String> payload) {

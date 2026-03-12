@@ -49,6 +49,7 @@ public class UsuarioService {
     	usuario.setCep(dados.getCep());
     	usuario.setCidade(dados.getCidade());
     	usuario.setEstado(dados.getEstado());
+    	usuario.setFoto(dados.getFoto());
 
     	return repository.save(usuario);
     	}
@@ -92,7 +93,7 @@ public class UsuarioService {
     			mensagem.setTo(email);
     			mensagem.setSubject("Recuperação de Senha - DevSenai");
     			mensagem.setText(
-    					"Olá" + usuario.getNome() + ",\n\n" + "Clique no link abaixo para criar uma nova senha:\n" +
+    					"Olá " + usuario.getNome() + ",\n\n" + "Clique no link abaixo para criar uma nova senha:\n" +
     			link
     		  );
     				
